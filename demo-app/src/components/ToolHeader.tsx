@@ -1,17 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 
 export type ToolHeaderProps = {
   headerText?: string;
 };
 
-export function ToolHeader(props: ToolHeaderProps) {
-  return (
-    <header>
-      <h1>{props.headerText}</h1>
-    </header>
-  );
-}
+export class ToolHeader extends Component<ToolHeaderProps> {
+  static defaultProps = {
+    headerText: "The Tool",
+  };
 
-ToolHeader.defaultProps = {
-  headerText: "The Tool",
-};
+  render() {
+    return (
+      <header>
+        <h1>{this.props.headerText}</h1>
+      </header>
+    );
+  }
+}
