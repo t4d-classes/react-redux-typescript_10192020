@@ -1,17 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { Color } from '../models/colors';
+import { Color } from "../models/colors";
 
-export function ColorTool() {
+export type ColorToolProps = {
+  colors: Color[];
+};
 
-  const colors: Color[] = [
-    { id: 1, name: 'blue' },
-    { id: 2, name: 'purple' },
-    { id: 3, name: 'teal' },
-    { id: 4, name: 'fuschia' },
-    { id: 5, name: 'green' },
-  ];
-
+export function ColorTool(props: ColorToolProps) {
   // very imperative - both the what and the how
 
   // const colorListItems: JSX.Element[] = [];
@@ -36,14 +31,13 @@ export function ColorTool() {
   return (
     <>
       <header>
-        <h1>
-          Color Tool
-        </h1>
+        <h1>Color Tool</h1>
       </header>
       <ul>
-        {colors.map(color => <li key={color.id}>{color.name}</li>)}
+        {props.colors.map((color) => (
+          <li key={color.id}>{color.name}</li>
+        ))}
       </ul>
     </>
   );
-
 }
