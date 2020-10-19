@@ -3,6 +3,7 @@ import React from "react";
 import { render } from "react-dom";
 
 import { Color } from "./models/colors";
+import { Car } from "./models/cars";
 
 // named import
 import { ColorTool } from "./components/ColorTool";
@@ -16,6 +17,25 @@ const colorList: Color[] = [
   { id: 5, name: "green" },
 ];
 
+const carList: Car[] = [
+  {
+    id: 1,
+    make: "Ford",
+    model: "Fusion Hybrid",
+    year: 2020,
+    color: "blue",
+    price: 45000,
+  },
+  {
+    id: 2,
+    make: "Tesla",
+    model: "S",
+    year: 2019,
+    color: "red",
+    price: 120000,
+  },
+];
+
 render(
   // - custom component, to reference the component we pass in the
   //   function object reference or the class reference
@@ -24,8 +44,9 @@ render(
   // - JSX - always start with an uppercase letter
   // React.createElement(ColorTool),
   <>
+    {/* React.createElement(ColorTool, { colors: colorList }) */}
     <ColorTool colors={colorList} />
-    <CarTool />
+    <CarTool cars={carList} />
   </>,
   document.querySelector("#root")
 );

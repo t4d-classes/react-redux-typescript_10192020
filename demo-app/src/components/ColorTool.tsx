@@ -2,11 +2,22 @@ import React from "react";
 
 import { Color } from "../models/colors";
 
+import { ToolHeader } from "./ToolHeader";
+
 export type ColorToolProps = {
   colors: Color[];
+  [x: string]: any;
 };
 
 export function ColorTool(props: ColorToolProps) {
+  // what would happen to the developer?
+  // props.colors.push({ id: 6, name: "orange" });
+
+  console.log(Object.isFrozen(props));
+
+  // props.newProp = "test";
+  // props.colors = [];
+
   // very imperative - both the what and the how
 
   // const colorListItems: JSX.Element[] = [];
@@ -30,9 +41,7 @@ export function ColorTool(props: ColorToolProps) {
 
   return (
     <>
-      <header>
-        <h1>Color Tool</h1>
-      </header>
+      <ToolHeader headerText="Color Tool" />
       <ul>
         {props.colors.map((color) => (
           <li key={color.id}>{color.name}</li>

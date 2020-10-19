@@ -2,31 +2,16 @@ import React from "react";
 
 import { Car } from "../models/cars";
 
-export function CarTool() {
-  const cars: Car[] = [
-    {
-      id: 1,
-      make: "Ford",
-      model: "Fusion Hybrid",
-      year: 2020,
-      color: "blue",
-      price: 45000,
-    },
-    {
-      id: 2,
-      make: "Tesla",
-      model: "S",
-      year: 2019,
-      color: "red",
-      price: 120000,
-    },
-  ];
+import { ToolHeader } from "./ToolHeader";
 
+export type CarToolProps = {
+  cars: Car[];
+};
+
+export function CarTool(props: CarToolProps) {
   return (
     <>
-      <header>
-        <h1>Car Tool</h1>
-      </header>
+      <ToolHeader headerText="Car Tool" />
       <table>
         <thead>
           <tr>
@@ -39,7 +24,7 @@ export function CarTool() {
           </tr>
         </thead>
         <tbody>
-          {cars.map((car) => (
+          {props.cars.map((car) => (
             <tr key={car.id}>
               <td>{car.id}</td>
               <td>{car.make}</td>
