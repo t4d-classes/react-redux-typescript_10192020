@@ -25,11 +25,8 @@ const getInitialState = () => ({
 export class CarForm extends Component<CarFormProps, CarFormState> {
   state = getInitialState();
 
-  // class arrow function
   change = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      // evaluate the expression in the square braces, and that will
-      // be the name of the property which will be updated
       [e.target.name]:
         e.target.type === "number" ? Number(e.target.value) : e.target.value,
     } as Pick<CarFormState, keyof CarFormState>);
@@ -41,8 +38,6 @@ export class CarForm extends Component<CarFormProps, CarFormState> {
   };
 
   render() {
-    console.log(this.state);
-
     return (
       <form>
         <div>
@@ -102,5 +97,3 @@ export class CarForm extends Component<CarFormProps, CarFormState> {
     );
   }
 }
-
-console.dir(CarForm);
