@@ -8,4 +8,6 @@
 
 4. When the "Delete" button is clicked, remove the car row from the table.
 
+To delete something from an array, use the filter method.
+
 5. Ensure it works!

@@ -1,6 +1,10 @@
 import React, { Component, ChangeEvent } from "react";
+import { NewCar } from "../models/cars";
 
-export type CarFormProps = {};
+export type CarFormProps = {
+  buttonText: string;
+  onSubmitCar: (newCar: NewCar) => void;
+};
 
 export type CarFormState = {
   make: string;
@@ -10,14 +14,16 @@ export type CarFormState = {
   price: number;
 };
 
+const getInitialState = () => ({
+  make: "",
+  model: "",
+  year: 1900,
+  color: "",
+  price: 0,
+});
+
 export class CarForm extends Component<CarFormProps, CarFormState> {
-  state = {
-    make: "",
-    model: "",
-    year: 1900,
-    color: "",
-    price: 0,
-  };
+  state = getInitialState();
 
   // class arrow function
   change = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +33,11 @@ export class CarForm extends Component<CarFormProps, CarFormState> {
       [e.target.name]:
         e.target.type === "number" ? Number(e.target.value) : e.target.value,
     } as Pick<CarFormState, keyof CarFormState>);
+  };
+
+  submitCar = () => {
+    this.props.onSubmitCar({ ...this.state });
+    this.setState(getInitialState());
   };
 
   render() {
@@ -84,7 +95,9 @@ export class CarForm extends Component<CarFormProps, CarFormState> {
             onChange={this.change}
           />
         </div>
-        <button type="button">Add Car</button>
+        <button type="button" onClick={this.submitCar}>
+          {this.props.buttonText}
+        </button>
       </form>
     );
   }
