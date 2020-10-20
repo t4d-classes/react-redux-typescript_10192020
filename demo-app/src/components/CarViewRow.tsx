@@ -4,10 +4,15 @@ import { Car } from "../models/cars";
 
 export type CarViewRowProps = {
   car: Car;
+  onEditCar: (carId: number) => void;
   onDeleteCar: (carId: number) => void;
 };
 
 export function CarViewRow(props: CarViewRowProps) {
+  const editCar = () => {
+    props.onEditCar(props.car.id);
+  };
+
   const deleteCar = () => {
     props.onDeleteCar(props.car.id);
   };
@@ -21,6 +26,9 @@ export function CarViewRow(props: CarViewRowProps) {
       <td>{props.car.color}</td>
       <td>{props.car.price}</td>
       <td>
+        <button type="button" onClick={editCar}>
+          Edit
+        </button>
         <button type="button" onClick={deleteCar}>
           Delete
         </button>

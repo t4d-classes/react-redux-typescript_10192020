@@ -12,11 +12,13 @@ export type CarToolProps = {
 
 export type CarToolState = {
   cars: Car[];
+  editCarId: number;
 };
 
 export class CarTool extends Component<CarToolProps, CarToolState> {
   state = {
     cars: [...this.props.cars],
+    editCarId: -1,
   };
 
   addCar = (newCar: NewCar) => {
@@ -37,11 +39,22 @@ export class CarTool extends Component<CarToolProps, CarToolState> {
     });
   };
 
+  editCar = (carId: number) => {
+    this.setState({
+      editCarId: carId,
+    });
+  };
+
   render() {
     return (
       <>
         <ToolHeader headerText="Car Tool" />
-        <CarTable cars={this.state.cars} onDeleteCar={this.deleteCar} />
+        <CarTable
+          cars={this.state.cars}
+          editCarId={this.state.editCarId}
+          onEditCar={this.editCar}
+          onDeleteCar={this.deleteCar}
+        />
         <CarForm buttonText="Add Car" onSubmitCar={this.addCar} />
       </>
     );
