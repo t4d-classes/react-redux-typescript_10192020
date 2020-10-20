@@ -10,11 +10,11 @@ import { ColorTool } from "./components/ColorTool";
 import { CarTool } from "./components/CarTool";
 
 const colorList: Color[] = [
-  { id: 1, name: "blue" },
-  { id: 2, name: "purple" },
-  { id: 3, name: "teal" },
-  { id: 4, name: "fuschia" },
-  { id: 5, name: "green" },
+  { id: 1, name: "blue", hexcode: "0000FF" },
+  { id: 2, name: "purple", hexcode: "0000FF" },
+  { id: 3, name: "teal", hexcode: "0000FF" },
+  { id: 4, name: "fuschia", hexcode: "0000FF" },
+  { id: 5, name: "green", hexcode: "0000FF" },
 ];
 
 const carList: Car[] = [

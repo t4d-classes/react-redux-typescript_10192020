@@ -1,6 +1,11 @@
 import React, { Component, ChangeEvent } from "react";
 
-export type ColorFormProps = {};
+import { NewColor } from "../models/colors";
+
+export type ColorFormProps = {
+  buttonText: string;
+  onSubmitColor: (color: NewColor) => void;
+};
 
 export type ColorFormState = {
   name: string;
@@ -8,37 +13,28 @@ export type ColorFormState = {
 };
 
 export class ColorForm extends Component<ColorFormProps, ColorFormState> {
-  // class property
   state = {
     name: "",
     hexcode: "",
   };
 
-  // constructor(props: ColorFormProps) {
-  //   super(props);
-
-  //   // the state property is special property for react components
-  //   this.state = {
-  //     name: "",
-  //     hexcode: "",
-  //   };
-
-  //   // this.change = this.change.bind(this);
-  // }
-
-  // class arrow function
   change = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      // evaluate the expression in the square braces, and that will
-      // be the name of the property which will be updated
       [e.target.name]:
         e.target.type === "number" ? Number(e.target.value) : e.target.value,
     } as Pick<ColorFormState, keyof ColorFormState>);
   };
 
-  render() {
-    console.log(this.state);
+  submitColor = () => {
+    this.props.onSubmitColor({ ...this.state });
 
+    this.setState({
+      name: "",
+      hexcode: "",
+    });
+  };
+
+  render() {
     return (
       <form>
         <div>
@@ -62,10 +58,10 @@ export class ColorForm extends Component<ColorFormProps, ColorFormState> {
             onChange={this.change}
           />
         </div>
-        <button type="button">Add Color</button>
+        <button type="button" onClick={this.submitColor}>
+          {this.props.buttonText}
+        </button>
       </form>
     );
   }
 }
-
-console.dir(ColorForm);
