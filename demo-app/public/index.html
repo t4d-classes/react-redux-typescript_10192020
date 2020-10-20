@@ -39,5 +39,169 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- <script>
+      "use strict";
+
+      // call-site this, the value of "this" is determined by how the
+      // function is invoked, not where the function is defined
+      function doIt() {
+        console.log(this);
+
+        // const that = this;
+
+        // function inner() {
+        //   console.log(that);
+        // }
+
+        // arrow functions use lexical this, the value of "this" is determined
+        // by where the function is defined in source code, not how the function
+        // is invoked
+        const inner = () => {
+          console.log(this);
+        };
+
+        inner();
+      }
+
+      // doIt();
+
+      // window.doIt();
+
+      const o = {
+        id: 2,
+        doIt: doIt,
+      };
+
+      // o.doIt();
+
+      // console.log(window.doIt === o.doIt);
+
+      // setTimeout(function () {
+      //   // o.doIt();
+      //   // doIt.call(o);
+      //   // doIt.call({ id: 45 });
+      // }, 2000);
+
+      function myBind(fn, context) {
+        return function (...params) {
+          return fn.call(context, ...params);
+        };
+      }
+
+      // const boundDoIt = myBind(doIt, o);
+      const boundDoIt = doIt.bind(o);
+
+      boundDoIt();
+    </script> -->
+    <!-- <script>
+      "use strict";
+
+      const parent = {
+        getFullName: function () {
+          console.log(this.firstName + " " + this.lastName);
+        },
+      };
+
+      const child1 = Object.create(parent);
+      child1.firstName = "Bob";
+      child1.lastName = "Smith";
+
+      const child2 = Object.create(parent);
+      child2.firstName = "Sally";
+      child2.lastName = "Thompkins";
+
+      child1.getFullName();
+      child2.getFullName();
+
+      console.log(child1);
+      console.log(child2);
+
+      console.log(child1.getFullName === child2.getFullName);
+
+      setTimeout(child1.getFullName, 2000);
+      setTimeout(child2.getFullName, 2000);
+
+      child1.getFullName = child1.getFullName.bind(child1);
+      child2.getFullName = child2.getFullName.bind(child2);
+
+      setTimeout(child1.getFullName, 3000);
+      setTimeout(child2.getFullName, 3000);
+
+      console.log(child1);
+      console.log(child2);
+
+      Array.prototype.ericMap = function (fn) {
+        const newItems = [];
+
+        for (let x = 0; x < this.length; x++) {
+          newItems.push(fn(this[x]));
+        }
+
+        return newItems;
+      };
+
+      const nums = [1, 2, 3, 4];
+
+      console.log("demo of eric map");
+      console.log(nums.ericMap((x) => x * 2));
+    </script> -->
+    <!-- <script>
+      class Person {
+        constructor(fn, ln) {
+          this.fn = fn;
+          this.ln = ln;
+        }
+
+        getFullName() {
+          return this.fn + " " + this.ln;
+        }
+      }
+
+      class Student extends Person {
+        constructor(studentId, fn, ln) {
+          super(fn, ln);
+          this.studentId = studentId;
+        }
+
+        getRecordInfo() {
+          return this.studentId + " " + this.ln + ", " + this.fn;
+        }
+      }
+
+      const student1 = new Student(1, "Bob", "Smith");
+      console.log(student1.getFullName());
+      console.log(student1.getRecordInfo());
+
+      console.dir(Student);
+      console.dir(student1);
+
+      function Person2(fn, ln) {
+        this.fn = fn;
+        this.ln = ln;
+      }
+
+      Person2.prototype.getFullName = function () {
+        return this.fn + " " + this.ln;
+      };
+
+      function Student2(studentId, fn, ln) {
+        this._super(fn, ln);
+        this.studentId = studentId;
+      }
+
+      Student2.prototype = Object.create(Person2.prototype);
+      Student2.prototype.constructor = Student2;
+      Student2.prototype._super = Person2;
+
+      Student2.prototype.getRecordInfo = function () {
+        return this.studentId + " " + this.ln + ", " + this.fn;
+      };
+
+      const student2 = new Student2(1, "Bob", "Smith");
+      console.log(student2.getFullName());
+
+      console.dir(Student2);
+      console.dir(student2);
+    </script> -->
   </body>
 </html>

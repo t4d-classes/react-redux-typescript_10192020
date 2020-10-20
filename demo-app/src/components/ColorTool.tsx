@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import { Color } from "../models/colors";
 
 import { ToolHeader } from "./ToolHeader";
+import { ColorForm } from "./ColorForm";
 
 export type ColorToolProps = {
   colors: Color[];
-  [x: string]: any;
 };
 
 export class ColorTool extends Component<ColorToolProps> {
@@ -19,6 +19,7 @@ export class ColorTool extends Component<ColorToolProps> {
             <li key={color.id}>{color.name}</li>
           ))}
         </ul>
+        <ColorForm />
       </>
     );
   }
