@@ -1,6 +1,6 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { Component, ChangeEvent } from 'react';
 
-import { Car } from "../models/cars";
+import { Car } from '../models/cars';
 
 export type CarEditRowProps = {
   car: Car;
@@ -28,8 +28,12 @@ export class CarEditRow extends Component<CarEditRowProps, CarEditRowState> {
   change = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       [e.target.name]:
-        e.target.type === "number" ? Number(e.target.value) : e.target.value,
+        e.target.type === 'number' ? Number(e.target.value) : e.target.value,
     } as Pick<CarEditRowState, keyof CarEditRowState>);
+  };
+
+  saveCar = () => {
+    this.props.onSaveCar({ ...this.state, id: this.props.car.id });
   };
 
   render() {
@@ -82,10 +86,10 @@ export class CarEditRow extends Component<CarEditRowProps, CarEditRowState> {
           />
         </td>
         <td>
-          <button type="button" onClick={() => null}>
+          <button type="button" onClick={this.saveCar}>
             Save
           </button>
-          <button type="button" onClick={() => null}>
+          <button type="button" onClick={this.props.onCancelCar}>
             Cancel
           </button>
         </td>
