@@ -1,67 +1,59 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { Component, ChangeEvent } from 'react';
 
-import { NewColor } from "../models/colors";
+import { NewColor } from '../models/colors';
+import { withForm, TheComponentProps } from '../hocs/withForm';
 
 export type ColorFormProps = {
   buttonText: string;
   onSubmitColor: (color: NewColor) => void;
-};
+} & TheComponentProps;
 
-export type ColorFormState = {
+export type ColorForm = {
   name: string;
   hexcode: string;
 };
 
-export class ColorForm extends Component<ColorFormProps, ColorFormState> {
-  state = {
-    name: "",
-    hexcode: "",
-  };
+export const ColorForm = withForm(
+  class ColorForm extends Component<ColorFormProps> {
+    submitColor = () => {
+      this.props.onSubmitColor({ ...this.props.form });
+      this.props.resetForm();
+    };
 
-  change = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      [e.target.name]:
-        e.target.type === "number" ? Number(e.target.value) : e.target.value,
-    } as Pick<ColorFormState, keyof ColorFormState>);
-  };
+    render() {
+      console.log('getValue: ', this.props.getValue('name'));
 
-  submitColor = () => {
-    this.props.onSubmitColor({ ...this.state });
-
-    this.setState({
-      name: "",
-      hexcode: "",
-    });
-  };
-
-  render() {
-    return (
-      <form>
-        <div>
-          {/* React.createElement('label', { htmlFor: 'name-input' }) */}
-          <label htmlFor="name-input">Name:</label>
-          <input
-            type="text"
-            id="name-input"
-            name="name"
-            value={this.state.name}
-            onChange={this.change}
-          />
-        </div>
-        <div>
-          <label htmlFor="hexcode-input">Hexcode:</label>
-          <input
-            type="text"
-            id="hexcode-input"
-            name="hexcode"
-            value={this.state.hexcode}
-            onChange={this.change}
-          />
-        </div>
-        <button type="button" onClick={this.submitColor}>
-          {this.props.buttonText}
-        </button>
-      </form>
-    );
-  }
-}
+      return (
+        <form>
+          <div>
+            <label htmlFor="name-input">Name:</label>
+            <input
+              type="text"
+              id="name-input"
+              name="name"
+              value={this.props.getValue('name')}
+              onChange={this.props.change}
+            />
+          </div>
+          <div>
+            <label htmlFor="hexcode-input">Hexcode:</label>
+            <input
+              type="text"
+              id="hexcode-input"
+              name="hexcode"
+              value={this.props.getValue('hexcode')}
+              onChange={this.props.change}
+            />
+          </div>
+          <button type="button" onClick={this.submitColor}>
+            {this.props.buttonText}
+          </button>
+        </form>
+      );
+    }
+  },
+  {
+    name: '',
+    hexcode: '',
+  },
+);

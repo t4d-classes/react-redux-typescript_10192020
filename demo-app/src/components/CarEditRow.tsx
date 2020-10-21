@@ -25,6 +25,18 @@ export class CarEditRow extends Component<CarEditRowProps, CarEditRowState> {
     price: this.props.car.price,
   };
 
+  // constructor(props: CarEditRowProps) {
+  //   super(props);
+
+  //   this.state = {
+  //     make: this.props.car.make,
+  //     model: this.props.car.model,
+  //     year: this.props.car.year,
+  //     color: this.props.car.color,
+  //     price: this.props.car.price,
+  //   };
+  // }
+
   change = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       [e.target.name]:
