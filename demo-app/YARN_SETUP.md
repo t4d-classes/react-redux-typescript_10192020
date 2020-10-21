@@ -14,8 +14,15 @@ yarn set version berry
 
 3. Add Redux and related packages.
 
+npm install redux react-redux redux-thunk
+
+npm install -d @types/react-redux
+
+
 ```bash
 yarn add redux react-redux redux-thunk
+
+yarn add @types/react-redux --dev
 ```
 
 4. Configure VSCode editor.

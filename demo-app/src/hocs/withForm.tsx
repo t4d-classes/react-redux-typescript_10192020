@@ -1,85 +1,62 @@
 import React, { Component, ChangeEvent } from 'react';
 
-export type TheComponentProps = {
-  form: any;
+export type FormComponentProps<T extends object> = {
+  form: T;
   change: (e: ChangeEvent<HTMLInputElement>) => void;
   resetForm: () => void;
-  getValue: (controlName: string) => any;
+  getValue: (controlName: keyof T) => any;
 };
 
-type FormComponentProps = {
-  [x: string]: any;
-};
-
-type FormComponentState = {
-  [x: string]: any;
-};
-
-export function withForm(
+export function withForm<T extends object>(
   TheComponent: Function,
-  initialForm: FormComponentState,
+  initialForm: T,
 ) {
-  return class FormComponent extends Component<
-    FormComponentProps,
-    FormComponentState
-  > {
-    state = initialForm as FormComponentState;
+  return class FormComponent extends Component<{ [x: string]: any }, T> {
+    state = initialForm as T;
+
+    controls: { [x: string]: string } = {};
 
     change = (e: ChangeEvent<HTMLInputElement>) => {
+      this.controls[e.target.name] = e.target.type;
+
       this.setState({
-        [e.target.name]: {
-          type: e.target.type,
-          value:
-            e.target.type === 'number'
-              ? e.target.value === ''
-                ? NaN
-                : Number(e.target.value)
-              : e.target.value,
-        },
-      } as Pick<FormComponentState, keyof FormComponentState>);
+        [e.target.name]:
+          e.target.type === 'number'
+            ? e.target.value === ''
+              ? NaN
+              : Number(e.target.value)
+            : e.target.value,
+      } as T);
     };
 
     resetForm = () => {
       this.setState({});
     };
 
-    getValue = (controlName: string) => {
-      // double equals comparison with null, checks for null or undefined
-
-      isNaN(NaN);
-
-      if (this.state[controlName]?.value == null) {
+    getValue = (controlName: keyof T) => {
+      if (this.state[controlName] == null) {
         return '';
       }
 
       if (
-        this.state[controlName].type === 'number' &&
-        isNaN(this.state[controlName].value)
+        this.controls[controlName as string] === 'number' &&
+        isNaN(Number(this.state[controlName]))
       ) {
         return '';
       }
 
-      return this.state[controlName].value;
+      return this.state[controlName];
     };
 
-    // { name: { type, value } } => { name: value }
-    getFormData() {
-      return Object.keys(this.state).reduce((formData: any, controlName) => {
-        formData[controlName] = this.state[controlName].value;
-        return formData;
-      }, {});
-    }
-
     render() {
-      return (
-        <TheComponent
-          {...this.props}
-          form={this.getFormData()}
-          change={this.change}
-          resetForm={this.resetForm}
-          getValue={this.getValue}
-        />
-      );
+      const formProps: FormComponentProps<T> = {
+        form: this.state,
+        change: this.change,
+        resetForm: this.resetForm,
+        getValue: this.getValue,
+      };
+
+      return <TheComponent {...this.props} {...formProps} />;
     }
   };
 }

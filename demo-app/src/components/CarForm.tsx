@@ -1,28 +1,29 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 import { NewCar } from '../models/cars';
 
-import { withForm, TheComponentProps } from '../hocs/withForm';
+import { withForm, FormComponentProps } from '../hocs/withForm';
+
+type CarForm = {
+  make: string;
+  model: string;
+  year: number;
+  color: string;
+  price: number;
+};
 
 export type CarFormProps = {
   buttonText: string;
   onSubmitCar: (newCar: NewCar) => void;
-} & TheComponentProps;
+} & FormComponentProps<CarForm>;
 
-// export type CarFormState = {
-//   make: string;
-//   model: string;
-//   year: number;
-//   color: string;
-//   price: number;
-// };
-
-const getInitialState = () => ({
-  make: '',
-  model: '',
-  year: 1900,
-  color: '',
-  price: 0,
-});
+const getInitialState = () =>
+  ({
+    make: '',
+    model: '',
+    year: 1900,
+    color: '',
+    price: 0,
+  } as CarForm);
 
 export const CarForm = withForm(
   class CarForm extends Component<CarFormProps> {

@@ -1,17 +1,17 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 
 import { NewColor } from '../models/colors';
-import { withForm, TheComponentProps } from '../hocs/withForm';
-
-export type ColorFormProps = {
-  buttonText: string;
-  onSubmitColor: (color: NewColor) => void;
-} & TheComponentProps;
+import { withForm, FormComponentProps } from '../hocs/withForm';
 
 export type ColorForm = {
   name: string;
   hexcode: string;
 };
+
+export type ColorFormProps = {
+  buttonText: string;
+  onSubmitColor: (color: NewColor) => void;
+} & FormComponentProps<ColorForm>;
 
 export const ColorForm = withForm(
   class ColorForm extends Component<ColorFormProps> {
@@ -21,8 +21,6 @@ export const ColorForm = withForm(
     };
 
     render() {
-      console.log('getValue: ', this.props.getValue('name'));
-
       return (
         <form>
           <div>
@@ -55,5 +53,5 @@ export const ColorForm = withForm(
   {
     name: '',
     hexcode: '',
-  },
+  } as ColorForm,
 );
