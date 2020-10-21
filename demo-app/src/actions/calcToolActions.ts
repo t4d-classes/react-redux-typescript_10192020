@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
-const ADD_ACTION = 'ADD';
-const SUBTRACT_ACTION = 'SUBTRACT';
+export const ADD_ACTION = 'ADD';
+export const SUBTRACT_ACTION = 'SUBTRACT';
 
 // export type AddAction = Action<string> & {
 //   payload: {
@@ -46,5 +46,5 @@ export const createSubtractAction: CreateSubtractAction = (num) => {
     payload: {
       value: num,
     },
-  } as SubtractAction;
+  };
 };
