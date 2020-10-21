@@ -8,7 +8,10 @@ import {
 } from '../actions/calcToolActions';
 import { CalcTool } from '../components/CalcTool';
 
-const mapStateToProps = (state: CalcToolState) => ({ result: state.result });
+const mapStateToProps = (state: CalcToolState) => ({
+  result: state.result,
+  history: state.history,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   /* bind action creators returns this */
