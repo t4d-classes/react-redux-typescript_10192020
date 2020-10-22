@@ -5,6 +5,8 @@ import { CalcToolState } from '../models/calc';
 import {
   createAddAction,
   createSubtractAction,
+  createMultiplyAction,
+  createDivideAction,
 } from '../actions/calcToolActions';
 import { CalcTool } from '../components/CalcTool';
 
@@ -25,6 +27,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     {
       onAdd: createAddAction,
       onSubtract: createSubtractAction,
+      onMultiply: createMultiplyAction,
+      onDivide: createDivideAction,
     },
     dispatch,
   );

@@ -7,6 +7,8 @@ export type CalcToolProps = {
   history: HistoryEntry[];
   onAdd: (num: number) => void;
   onSubtract: (num: number) => void;
+  onMultiply: (num: number) => void;
+  onDivide: (num: number) => void;
 };
 
 type CalcToolState = {};
@@ -45,6 +47,16 @@ export class CalcTool extends Component<CalcToolProps, CalcToolState> {
               type="button"
               onClick={() => this.props.onSubtract(this.state.numInput)}>
               -
+            </button>
+            <button
+              type="button"
+              onClick={() => this.props.onMultiply(this.state.numInput)}>
+              *
+            </button>
+            <button
+              type="button"
+              onClick={() => this.props.onDivide(this.state.numInput)}>
+              /
             </button>
           </fieldset>
         </form>
