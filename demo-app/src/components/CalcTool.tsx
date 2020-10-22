@@ -13,6 +13,7 @@ export type CalcToolProps = {
   onMultiply: (num: number) => void;
   onDivide: (num: number) => void;
   onClear: () => void;
+  onDeleteHistoryEntry: (historyEntryId: number) => void;
 };
 
 type CalcToolState = {
@@ -81,6 +82,11 @@ export class CalcTool extends Component<CalcToolProps, CalcToolState> {
           {this.props.history.map((entry) => (
             <li key={entry.id}>
               {entry.opName} {entry.opValue}
+              <button
+                type="button"
+                onClick={() => this.props.onDeleteHistoryEntry(entry.id)}>
+                X
+              </button>
             </li>
           ))}
         </ul>

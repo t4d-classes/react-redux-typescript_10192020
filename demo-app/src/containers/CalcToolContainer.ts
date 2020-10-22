@@ -8,14 +8,32 @@ import {
   createMultiplyAction,
   createDivideAction,
   createClearAction,
+  createDeleteHistoryEntryAction,
 } from '../actions/calcToolActions';
 import { CalcTool } from '../components/CalcTool';
 
-const mapStateToProps = (state: CalcToolAppState) => ({
-  result: state.result,
-  history: state.history,
-  errorMessage: state.errorMessage,
-});
+const mapStateToProps = (state: CalcToolAppState) => {
+  const result = state.history.reduce((total, historyEntry) => {
+    switch (historyEntry.opName) {
+      case 'ADD':
+        return total + historyEntry.opValue;
+      case 'SUBTRACT':
+        return total - historyEntry.opValue;
+      case 'MULTIPLY':
+        return total * historyEntry.opValue;
+      case 'DIVIDE':
+        return total / historyEntry.opValue;
+      default:
+        return total;
+    }
+  }, 0);
+
+  return {
+    result,
+    history: state.history,
+    errorMessage: state.errorMessage,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   /* bind action creators returns this */
@@ -32,6 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       onMultiply: createMultiplyAction,
       onDivide: createDivideAction,
       onClear: createClearAction,
+      onDeleteHistoryEntry: createDeleteHistoryEntryAction,
     },
     dispatch,
   );
