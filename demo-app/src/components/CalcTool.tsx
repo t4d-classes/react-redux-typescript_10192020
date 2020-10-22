@@ -3,15 +3,19 @@ import React, { Component, ChangeEvent } from 'react';
 import { HistoryEntry } from '../models/calc';
 
 export type CalcToolProps = {
+  // store state
   result: number;
   history: HistoryEntry[];
+  // actions bound to the store dispatch
   onAdd: (num: number) => void;
   onSubtract: (num: number) => void;
   onMultiply: (num: number) => void;
   onDivide: (num: number) => void;
 };
 
-type CalcToolState = {};
+type CalcToolState = {
+  numInput: number;
+};
 
 export class CalcTool extends Component<CalcToolProps, CalcToolState> {
   state = {

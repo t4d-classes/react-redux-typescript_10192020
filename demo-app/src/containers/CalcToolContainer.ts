@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { CalcToolState } from '../models/calc';
+import { CalcToolAppState } from '../models/calc';
 import {
   createAddAction,
   createSubtractAction,
@@ -10,7 +10,7 @@ import {
 } from '../actions/calcToolActions';
 import { CalcTool } from '../components/CalcTool';
 
-const mapStateToProps = (state: CalcToolState) => ({
+const mapStateToProps = (state: CalcToolAppState) => ({
   result: state.result,
   history: state.history,
 });

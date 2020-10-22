@@ -4,7 +4,7 @@ export type HistoryEntry = {
   opValue: number;
 };
 
-export type CalcToolState = {
+export type CalcToolAppState = {
   result: number;
   history: HistoryEntry[];
 };
