@@ -6,11 +6,13 @@ export type CalcToolProps = {
   // store state
   result: number;
   history: HistoryEntry[];
+  errorMessage: string;
   // actions bound to the store dispatch
   onAdd: (num: number) => void;
   onSubtract: (num: number) => void;
   onMultiply: (num: number) => void;
   onDivide: (num: number) => void;
+  onClear: () => void;
 };
 
 type CalcToolState = {
@@ -28,9 +30,17 @@ export class CalcTool extends Component<CalcToolProps, CalcToolState> {
     });
   };
 
+  clear = () => {
+    this.setState({
+      numInput: 0,
+    });
+    this.props.onClear();
+  };
+
   render() {
     return (
       <>
+        {this.props.errorMessage || <div>Error: {this.props.errorMessage}</div>}
         <form>
           <div>Result: {this.props.result}</div>
           <div>
@@ -61,6 +71,9 @@ export class CalcTool extends Component<CalcToolProps, CalcToolState> {
               type="button"
               onClick={() => this.props.onDivide(this.state.numInput)}>
               /
+            </button>
+            <button type="button" onClick={this.clear}>
+              Clear
             </button>
           </fieldset>
         </form>

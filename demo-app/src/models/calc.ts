@@ -7,4 +7,5 @@ export type HistoryEntry = {
 export type CalcToolAppState = {
   result: number;
   history: HistoryEntry[];
+  errorMessage: string;
 };

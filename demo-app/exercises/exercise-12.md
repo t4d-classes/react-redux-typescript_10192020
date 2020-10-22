@@ -8,4 +8,4 @@
 
 Bonus
 
-4. If the calculation request will be a division by zero, display an error message and do not record the history entry.
+4. If the calculation requested will be a division by zero, display an error message and do not record the history entry.

@@ -1,9 +1,10 @@
-import { Action } from 'redux';
+import { Action, AnyAction } from 'redux';
 
 export const ADD_ACTION = 'ADD';
 export const SUBTRACT_ACTION = 'SUBTRACT';
 export const MULTIPLY_ACTION = 'MULTIPLY';
 export const DIVIDE_ACTION = 'DIVIDE';
+export const CLEAR_ACTION = 'CLEAR';
 
 // export type AddAction = Action<string> & {
 //   payload: {
@@ -21,6 +22,10 @@ export interface AddAction extends Action<typeof ADD_ACTION> {
   payload: {
     value: number;
   };
+}
+
+export function isAddAction(action: AnyAction): action is AddAction {
+  return action.type === ADD_ACTION;
 }
 
 export type CreateAddAction = (num: number) => AddAction;
@@ -82,5 +87,16 @@ export const createDivideAction: CreateDivideAction = (num) => {
     payload: {
       value: num,
     },
+  };
+};
+
+// export interface ClearAction extends Action<typeof CLEAR_ACTION> {}
+export type ClearAction = Action<typeof CLEAR_ACTION>;
+
+export type CreateClearAction = () => ClearAction;
+
+export const createClearAction: CreateClearAction = () => {
+  return {
+    type: CLEAR_ACTION,
   };
 };

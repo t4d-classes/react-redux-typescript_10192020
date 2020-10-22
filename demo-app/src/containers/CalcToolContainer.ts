@@ -7,12 +7,14 @@ import {
   createSubtractAction,
   createMultiplyAction,
   createDivideAction,
+  createClearAction,
 } from '../actions/calcToolActions';
 import { CalcTool } from '../components/CalcTool';
 
 const mapStateToProps = (state: CalcToolAppState) => ({
   result: state.result,
   history: state.history,
+  errorMessage: state.errorMessage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -29,6 +31,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       onSubtract: createSubtractAction,
       onMultiply: createMultiplyAction,
       onDivide: createDivideAction,
+      onClear: createClearAction,
     },
     dispatch,
   );
