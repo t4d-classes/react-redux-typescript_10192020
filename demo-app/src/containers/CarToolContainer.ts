@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { CarToolAppState } from '../models/cars';
 import {
-  createAddCarAction,
+  addCar,
   createSaveCarAction,
   createDeleteCarAction,
   createEditCarAction,
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       onRefreshCars: refreshCars,
-      onAddCar: createAddCarAction,
+      onAddCar: addCar,
       onSaveCar: createSaveCarAction,
       onDeleteCar: createDeleteCarAction,
       onEditCar: createEditCarAction,

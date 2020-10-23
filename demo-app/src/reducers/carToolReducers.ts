@@ -3,7 +3,6 @@ import { Reducer, combineReducers, AnyAction, Action } from 'redux';
 import { Car, CarToolAppState } from '../models/cars';
 
 import {
-  ADD_CAR_ACTION,
   SAVE_CAR_ACTION,
   DELETE_CAR_ACTION,
   EDIT_CAR_ACTION,
@@ -20,7 +19,7 @@ export const editCarIdReducer: Reducer<number, AnyAction> = (
   }
 
   if (
-    action.type === ADD_CAR_ACTION ||
+    action.type === REFRESH_CARS_DONE_ACTION ||
     action.type === SAVE_CAR_ACTION ||
     action.type === DELETE_CAR_ACTION ||
     action.type === CANCEL_CAR_ACTION
@@ -34,16 +33,6 @@ export const editCarIdReducer: Reducer<number, AnyAction> = (
 export const carsReducer: Reducer<Car[], AnyAction> = (cars = [], action) => {
   if (action.type === REFRESH_CARS_DONE_ACTION) {
     return action.payload.cars;
-  }
-
-  if (action.type === ADD_CAR_ACTION) {
-    return [
-      ...cars,
-      {
-        ...action.payload.car,
-        id: Math.max(...cars.map((c) => c.id), 0) + 1,
-      },
-    ];
   }
 
   if (action.type === SAVE_CAR_ACTION) {

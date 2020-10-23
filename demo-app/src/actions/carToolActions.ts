@@ -5,7 +5,8 @@ import { Car, NewCar } from '../models/cars';
 export const REFRESH_CARS_REQUEST_ACTION = 'REFRESH_CARS_REQUEST';
 export const REFRESH_CARS_DONE_ACTION = 'REFRESH_CARS_DONE';
 
-export const ADD_CAR_ACTION = 'ADD_CAR';
+export const ADD_CAR_REQUEST_ACTION = 'ADD_CAR_REQUEST';
+
 export const SAVE_CAR_ACTION = 'SAVE_CAR';
 export const DELETE_CAR_ACTION = 'DELETE_CAR';
 export const EDIT_CAR_ACTION = 'EDIT_CAR';
@@ -47,16 +48,33 @@ export const refreshCars = () => {
 
 // New Car Action
 
-export interface AddCarAction extends Action<typeof ADD_CAR_ACTION> {
+export interface AddCarRequestAction
+  extends Action<typeof ADD_CAR_REQUEST_ACTION> {
   payload: { car: NewCar };
 }
 
-export type CreateAddCarAction = (car: NewCar) => AddCarAction;
+export type CreateAddCarRequestAction = (car: NewCar) => AddCarRequestAction;
 
-export const createAddCarAction: CreateAddCarAction = (car) => ({
-  type: ADD_CAR_ACTION,
+export const createAddCarRequestAction: CreateAddCarRequestAction = (car) => ({
+  type: ADD_CAR_REQUEST_ACTION,
   payload: { car },
 });
+
+export const addCar = (car: NewCar) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(createAddCarRequestAction(car));
+
+    await fetch('http://localhost:3060/cars', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(car),
+    });
+
+    return refreshCars()(dispatch);
+  };
+};
 
 // End New Car Action
 
