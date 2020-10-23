@@ -3,14 +3,20 @@ import { Reducer, combineReducers, AnyAction, Action } from 'redux';
 import { Car, CarToolAppState } from '../models/cars';
 
 import {
-  SAVE_CAR_ACTION,
-  DELETE_CAR_ACTION,
   EDIT_CAR_ACTION,
   CANCEL_CAR_ACTION,
   REFRESH_CARS_DONE_ACTION,
+  EditCarAction,
+  RefreshCarsDoneAction,
+  CancelCarAction,
 } from '../actions/carToolActions';
 
-export const editCarIdReducer: Reducer<number, AnyAction> = (
+export type CarToolActions =
+  | EditCarAction
+  | RefreshCarsDoneAction
+  | CancelCarAction;
+
+export const editCarIdReducer: Reducer<number, CarToolActions> = (
   editCarId = -1,
   action,
 ) => {
@@ -20,8 +26,6 @@ export const editCarIdReducer: Reducer<number, AnyAction> = (
 
   if (
     action.type === REFRESH_CARS_DONE_ACTION ||
-    action.type === SAVE_CAR_ACTION ||
-    action.type === DELETE_CAR_ACTION ||
     action.type === CANCEL_CAR_ACTION
   ) {
     return -1;
@@ -30,27 +34,18 @@ export const editCarIdReducer: Reducer<number, AnyAction> = (
   return editCarId;
 };
 
-export const carsReducer: Reducer<Car[], AnyAction> = (cars = [], action) => {
+export const carsReducer: Reducer<Car[], CarToolActions> = (
+  cars = [],
+  action,
+) => {
   if (action.type === REFRESH_CARS_DONE_ACTION) {
     return action.payload.cars;
-  }
-
-  if (action.type === SAVE_CAR_ACTION) {
-    const { car } = action.payload;
-    const carIndex = cars.findIndex((c) => c.id === car.id);
-    const newCars = [...cars];
-    newCars[carIndex] = car;
-    return newCars;
-  }
-
-  if (action.type === DELETE_CAR_ACTION) {
-    return cars.filter((c) => c.id === action.payload.carId);
   }
 
   return cars;
 };
 
-export const isLoadingReducer: Reducer<boolean, Action<string>> = (
+export const isLoadingReducer: Reducer<boolean, CarToolActions> = (
   isLoading = false,
   action,
 ) => {
@@ -67,7 +62,7 @@ export const isLoadingReducer: Reducer<boolean, Action<string>> = (
 
 export const carToolReducer: Reducer<
   CarToolAppState,
-  AnyAction | Action<string>
+  CarToolActions
 > = combineReducers({
   isLoading: isLoadingReducer,
   editCarId: editCarIdReducer,

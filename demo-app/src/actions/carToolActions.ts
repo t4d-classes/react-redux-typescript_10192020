@@ -6,9 +6,9 @@ export const REFRESH_CARS_REQUEST_ACTION = 'REFRESH_CARS_REQUEST';
 export const REFRESH_CARS_DONE_ACTION = 'REFRESH_CARS_DONE';
 
 export const ADD_CAR_REQUEST_ACTION = 'ADD_CAR_REQUEST';
+export const SAVE_CAR_REQUEST_ACTION = 'SAVE_CAR_REQUEST';
+export const DELETE_CAR_REQUEST_ACTION = 'DELETE_CAR_REQUEST';
 
-export const SAVE_CAR_ACTION = 'SAVE_CAR';
-export const DELETE_CAR_ACTION = 'DELETE_CAR';
 export const EDIT_CAR_ACTION = 'EDIT_CAR';
 export const CANCEL_CAR_ACTION = 'CANCEL_CAR';
 
@@ -80,31 +80,67 @@ export const addCar = (car: NewCar) => {
 
 // Existing Car Action
 
-export interface SaveCarAction extends Action<typeof SAVE_CAR_ACTION> {
+export interface SaveCarRequestAction
+  extends Action<typeof SAVE_CAR_REQUEST_ACTION> {
   payload: { car: Car };
 }
 
-export type CreateSaveCarAction = (car: Car) => SaveCarAction;
+export type CreateSaveCarRequestAction = (car: Car) => SaveCarRequestAction;
 
-export const createSaveCarAction: CreateSaveCarAction = (car) => ({
-  type: SAVE_CAR_ACTION,
+export const createSaveCarRequestAction: CreateSaveCarRequestAction = (
+  car,
+) => ({
+  type: SAVE_CAR_REQUEST_ACTION,
   payload: { car },
 });
+
+export const saveCar = (car: Car) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(createSaveCarRequestAction(car));
+
+    await fetch('http://localhost:3060/cars/' + encodeURIComponent(car.id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(car),
+    });
+
+    return refreshCars()(dispatch);
+  };
+};
 
 // End Existing Car Action
 
 // Delete Car Action
 
-export interface DeleteCarAction extends Action<typeof DELETE_CAR_ACTION> {
+export interface DeleteCarRequestAction
+  extends Action<typeof DELETE_CAR_REQUEST_ACTION> {
   payload: { carId: number };
 }
 
-export type CreateDeleteCarAction = (carId: number) => DeleteCarAction;
+export type CreateDeleteCarRequestAction = (
+  carId: number,
+) => DeleteCarRequestAction;
 
-export const createDeleteCarAction: CreateDeleteCarAction = (carId) => ({
-  type: DELETE_CAR_ACTION,
+export const createDeleteCarRequestAction: CreateDeleteCarRequestAction = (
+  carId,
+) => ({
+  type: DELETE_CAR_REQUEST_ACTION,
   payload: { carId },
 });
+
+export const deleteCar = (carId: number) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(createDeleteCarRequestAction(carId));
+
+    await fetch('http://localhost:3060/cars/' + encodeURIComponent(carId), {
+      method: 'DELETE',
+    });
+
+    return refreshCars()(dispatch);
+  };
+};
 
 // End Delete Action
 
