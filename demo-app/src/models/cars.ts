@@ -7,6 +7,8 @@ export type Car = {
   price: number;
 };
 
+// export type CarKeys = 'id' | 'make' | 'model' | 'year' | 'color' | 'price';
+
 export type CarKeys = keyof Car;
 
 export type NewCar = Omit<Car, 'id'>;

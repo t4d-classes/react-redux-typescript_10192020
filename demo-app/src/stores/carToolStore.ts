@@ -1,4 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { carToolReducer } from '../reducers/carToolReducers';
 
-export const carToolStore = createStore(carToolReducer);
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+
+export const carToolStore = createStore(
+  carToolReducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);

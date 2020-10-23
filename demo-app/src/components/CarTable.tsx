@@ -14,6 +14,28 @@ export type CarTableProps = {
 };
 
 export function CarTable(props: CarTableProps) {
+  const carTableBody = (car: Car) => {
+    if (car.id === props.editCarId) {
+      return (
+        <CarEditRow
+          key={car.id}
+          car={car}
+          onSaveCar={props.onSaveCar}
+          onCancelCar={props.onCancelCar}
+        />
+      );
+    } else {
+      return (
+        <CarViewRow
+          key={car.id}
+          car={car}
+          onEditCar={props.onEditCar}
+          onDeleteCar={props.onDeleteCar}
+        />
+      );
+    }
+  };
+
   return (
     <table>
       <thead>
@@ -27,25 +49,27 @@ export function CarTable(props: CarTableProps) {
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
-        {props.cars.map((car) =>
-          car.id === props.editCarId ? (
-            <CarEditRow
-              key={car.id}
-              car={car}
-              onSaveCar={props.onSaveCar}
-              onCancelCar={props.onCancelCar}
-            />
-          ) : (
-            <CarViewRow
-              key={car.id}
-              car={car}
-              onEditCar={props.onEditCar}
-              onDeleteCar={props.onDeleteCar}
-            />
-          ),
-        )}
-      </tbody>
+      <tbody>{props.cars.map(carTableBody)}</tbody>
     </table>
   );
 }
+
+// {
+//   props.cars.map((car) =>
+//     car.id === props.editCarId ? (
+//       <CarEditRow
+//         key={car.id}
+//         car={car}
+//         onSaveCar={props.onSaveCar}
+//         onCancelCar={props.onCancelCar}
+//       />
+//     ) : (
+//       <CarViewRow
+//         key={car.id}
+//         car={car}
+//         onEditCar={props.onEditCar}
+//         onDeleteCar={props.onDeleteCar}
+//       />
+//     ),
+//   );
+// }

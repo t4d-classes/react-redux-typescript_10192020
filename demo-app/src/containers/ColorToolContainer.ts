@@ -11,13 +11,20 @@ const mapStateToProps = (state: ColorToolAppState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
+/// const add = (a: number, b: number) => a + b;
+
+const add = (a: number, b: number) => {
+  return a + b;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return bindActionCreators(
     {
       onAddColor: createAddColorAction,
     },
     dispatch,
   );
+};
 
 const createColorToolContainer = connect(mapStateToProps, mapDispatchToProps);
 
