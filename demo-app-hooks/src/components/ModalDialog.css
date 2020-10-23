@@ -1,0 +1,25 @@
+#modal > div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(150, 150, 150, 0.5);
+}
+
+#modal > div > p {
+  height: 100px;
+  width: 200px;
+  text-align: center;
+  background-color: navy;
+  color: white;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
