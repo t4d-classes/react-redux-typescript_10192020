@@ -3,7 +3,7 @@ import { Action, Dispatch } from 'redux';
 import { Car, NewCar } from '../models/cars';
 
 export const REFRESH_CARS_REQUEST_ACTION = 'REFRESH_CARS_REQUEST';
-export const REFRESH_CARS_DONE_ACTION = 'REFRESH_CARS_DONE_CAR';
+export const REFRESH_CARS_DONE_ACTION = 'REFRESH_CARS_DONE';
 
 export const ADD_CAR_ACTION = 'ADD_CAR';
 export const SAVE_CAR_ACTION = 'SAVE_CAR';

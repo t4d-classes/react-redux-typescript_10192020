@@ -18,4 +18,5 @@ export type NewCarKeys = keyof NewCar;
 export type CarToolAppState = {
   cars: Car[];
   editCarId: number;
+  isLoading: boolean;
 };

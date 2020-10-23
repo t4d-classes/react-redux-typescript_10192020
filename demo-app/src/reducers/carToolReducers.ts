@@ -1,4 +1,4 @@
-import { Reducer, combineReducers, AnyAction } from 'redux';
+import { Reducer, combineReducers, AnyAction, Action } from 'redux';
 
 import { Car, CarToolAppState } from '../models/cars';
 
@@ -8,6 +8,7 @@ import {
   DELETE_CAR_ACTION,
   EDIT_CAR_ACTION,
   CANCEL_CAR_ACTION,
+  REFRESH_CARS_DONE_ACTION,
 } from '../actions/carToolActions';
 
 export const editCarIdReducer: Reducer<number, AnyAction> = (
@@ -30,22 +31,11 @@ export const editCarIdReducer: Reducer<number, AnyAction> = (
   return editCarId;
 };
 
-const initialCars: Car[] = [
-  {
-    id: 1,
-    make: 'Ford',
-    model: 'Fusion Hybrid',
-    year: 2020,
-    color: 'blue',
-    price: 45000,
-  },
-  { id: 2, make: 'Tesla', model: 'S', year: 2019, color: 'red', price: 120000 },
-];
+export const carsReducer: Reducer<Car[], AnyAction> = (cars = [], action) => {
+  if (action.type === REFRESH_CARS_DONE_ACTION) {
+    return action.payload.cars;
+  }
 
-export const carsReducer: Reducer<Car[], AnyAction> = (
-  cars = initialCars,
-  action,
-) => {
   if (action.type === ADD_CAR_ACTION) {
     return [
       ...cars,
@@ -71,10 +61,26 @@ export const carsReducer: Reducer<Car[], AnyAction> = (
   return cars;
 };
 
+export const isLoadingReducer: Reducer<boolean, Action<string>> = (
+  isLoading = false,
+  action,
+) => {
+  if (action.type.endsWith('_REQUEST')) {
+    return true;
+  }
+
+  if (action.type.endsWith('_DONE')) {
+    return false;
+  }
+
+  return isLoading;
+};
+
 export const carToolReducer: Reducer<
   CarToolAppState,
-  AnyAction
+  AnyAction | Action<string>
 > = combineReducers({
+  isLoading: isLoadingReducer,
   editCarId: editCarIdReducer,
   cars: carsReducer,
 });

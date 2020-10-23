@@ -9,17 +9,24 @@ import { CarForm } from './CarForm';
 export type CarToolProps = {
   cars: Car[];
   editCarId: number;
+  isLoading: boolean;
   onAddCar: (car: NewCar) => void;
   onSaveCar: (car: Car) => void;
   onDeleteCar: (carId: number) => void;
   onEditCar: (carId: number) => void;
   onCancelCar: () => void;
+  onRefreshCars: () => void;
 };
 
 export class CarTool extends Component<CarToolProps> {
+  componentDidMount() {
+    this.props.onRefreshCars();
+  }
+
   render() {
     return (
       <>
+        <div>isLoading: {this.props.isLoading ? 'loading' : 'not loading'}</div>
         <ToolHeader headerText="Car Tool" />
         <CarTable
           cars={this.props.cars}

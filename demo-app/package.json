@@ -23,7 +23,7 @@
   "scripts": {
     "start": "run-p web rest",
     "web": "react-scripts start",
-    "rest": "json-server --port 3060 ./db.json",
+    "rest": "json-server --delay 3000 --port 3060 ./db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

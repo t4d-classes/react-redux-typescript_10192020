@@ -8,11 +8,13 @@ import {
   createDeleteCarAction,
   createEditCarAction,
   createCancelCarAction,
+  refreshCars,
 } from '../actions/carToolActions';
 import { CarTool } from '../components/CarTool';
 
 const mapStateToProps = (state: CarToolAppState) => {
   return {
+    isLoading: state.isLoading,
     cars: state.cars,
     editCarId: state.editCarId,
   };
@@ -21,6 +23,7 @@ const mapStateToProps = (state: CarToolAppState) => {
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
+      onRefreshCars: refreshCars,
       onAddCar: createAddCarAction,
       onSaveCar: createSaveCarAction,
       onDeleteCar: createDeleteCarAction,
