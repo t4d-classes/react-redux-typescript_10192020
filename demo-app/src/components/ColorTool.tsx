@@ -20,7 +20,10 @@ export class ColorTool extends Component<ColorToolProps> {
             <li key={color.id}>{color.name}</li>
           ))}
         </ul>
-        <ColorForm buttonText="Add Color" onSubmitColor={this.props.addColor} />
+        <ColorForm
+          buttonText="Add Color"
+          onSubmitColor={this.props.onAddColor}
+        />
       </>
     );
   }
