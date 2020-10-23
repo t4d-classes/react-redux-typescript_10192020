@@ -5,6 +5,7 @@ import { Car, NewCar } from '../models/cars';
 import { ToolHeader } from './ToolHeader';
 import { CarTable } from './CarTable';
 import { CarForm } from './CarForm';
+import { ModalDialog } from './ModalDialog';
 
 export type CarToolProps = {
   cars: Car[];
@@ -26,7 +27,6 @@ export class CarTool extends Component<CarToolProps> {
   render() {
     return (
       <>
-        <div>isLoading: {this.props.isLoading ? 'loading' : 'not loading'}</div>
         <ToolHeader headerText="Car Tool" />
         <CarTable
           cars={this.props.cars}
@@ -37,6 +37,7 @@ export class CarTool extends Component<CarToolProps> {
           onCancelCar={this.props.onCancelCar}
         />
         <CarForm buttonText="Add Car" onSubmitCar={this.props.onAddCar} />
+        {this.props.isLoading && <ModalDialog>Loading...</ModalDialog>}
       </>
     );
   }
