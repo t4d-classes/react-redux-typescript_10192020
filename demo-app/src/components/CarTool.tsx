@@ -8,74 +8,28 @@ import { CarForm } from './CarForm';
 
 export type CarToolProps = {
   cars: Car[];
-};
-
-export type CarToolState = {
-  cars: Car[];
   editCarId: number;
+  onAddCar: (car: NewCar) => void;
+  onSaveCar: (car: Car) => void;
+  onDeleteCar: (carId: number) => void;
+  onEditCar: (carId: number) => void;
+  onCancelCar: () => void;
 };
 
-export class CarTool extends Component<CarToolProps, CarToolState> {
-  state = {
-    cars: [...this.props.cars],
-    editCarId: -1,
-  };
-
-  addCar = (newCar: NewCar) => {
-    this.setState({
-      cars: [
-        ...this.state.cars,
-        {
-          ...newCar,
-          id: Math.max(...this.state.cars.map((c) => c.id), 0) + 1,
-        },
-      ],
-      editCarId: -1,
-    });
-  };
-
-  saveCar = (car: Car) => {
-    const newCars = [...this.state.cars];
-    const carIndex = newCars.findIndex((c) => c.id === car.id);
-    newCars[carIndex] = car;
-    this.setState({
-      cars: newCars,
-      editCarId: -1,
-    });
-  };
-
-  deleteCar = (carId: number) => {
-    this.setState({
-      cars: this.state.cars.filter((c) => c.id !== carId),
-      editCarId: -1,
-    });
-  };
-
-  editCar = (carId: number) => {
-    this.setState({
-      editCarId: carId,
-    });
-  };
-
-  cancelCar = () => {
-    this.setState({
-      editCarId: -1,
-    });
-  };
-
+export class CarTool extends Component<CarToolProps> {
   render() {
     return (
       <>
         <ToolHeader headerText="Car Tool" />
         <CarTable
-          cars={this.state.cars}
-          editCarId={this.state.editCarId}
-          onEditCar={this.editCar}
-          onDeleteCar={this.deleteCar}
-          onSaveCar={this.saveCar}
-          onCancelCar={this.cancelCar}
+          cars={this.props.cars}
+          editCarId={this.props.editCarId}
+          onEditCar={this.props.onEditCar}
+          onDeleteCar={this.props.onDeleteCar}
+          onSaveCar={this.props.onSaveCar}
+          onCancelCar={this.props.onCancelCar}
         />
-        <CarForm buttonText="Add Car" onSubmitCar={this.addCar} />
+        <CarForm buttonText="Add Car" onSubmitCar={this.props.onAddCar} />
       </>
     );
   }

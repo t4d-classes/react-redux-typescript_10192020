@@ -7,4 +7,9 @@ export type Car = {
   price: number;
 };
 
-export type NewCar = Omit<Car, "id">;
+export type NewCar = Omit<Car, 'id'>;
+
+export type CarToolAppState = {
+  cars: Car[];
+  editCarId: number;
+};
